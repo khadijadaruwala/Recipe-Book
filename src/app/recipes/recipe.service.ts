@@ -1,12 +1,25 @@
 import { EventEmitter } from '@angular/core';
 import { Recipe } from './recipe.model';
+import { Ingredient } from '../shared/ingredient.model';
 
 export class RecipeService {
   recipeSelected = new EventEmitter<Recipe>();
 
   private recipes: Recipe[] = [
-    new Recipe('Test Recipe', 'This is a test recipe', 'https://food.fnr.sndimg.com/content/dam/images/food/fullset/2019/8/6/0/WU2301_Four-Cheese-Pepperoni-Pizzadilla_s4x3.jpg.rend.hgtvcom.826.620.suffix/1565115622965.jpeg'),
-    new Recipe('Another Test Recipe', 'This is a test recipe', 'https://food.fnr.sndimg.com/content/dam/images/food/fullset/2019/8/6/0/WU2301_Four-Cheese-Pepperoni-Pizzadilla_s4x3.jpg.rend.hgtvcom.826.620.suffix/1565115622965.jpeg')
+    new Recipe('Pizza',
+      'We all love pizza',
+      'https://www.indianhealthyrecipes.com/wp-content/uploads/2015/10/pizza-recipe-1.jpg',
+      [new Ingredient('Tomato', 2),
+      new Ingredient('Onion', 2),
+      new Ingredient('Capsicum', 2),
+      new Ingredient('Cheese', 1)]),
+    new Recipe('Burger',
+      'Burgers be the best',
+      'https://i.ytimg.com/vi/L6yX6Oxy_J8/maxresdefault.jpg',
+      [new Ingredient('Bread buns', 6),
+      new Ingredient('Lettuce', 4),
+      new Ingredient('Patty', 2),
+      new Ingredient('Cheese Slice', 1)])
   ];
 
   getRecipes() {
