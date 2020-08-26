@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
 import { throwError, BehaviorSubject } from 'rxjs';
 import { User } from './user.model';
+import { Router } from '@angular/router';
 
 export interface AuthResponseData {
   idToken: string;
@@ -12,14 +13,13 @@ export interface AuthResponseData {
   localId: string;
   registered?: boolean;
 }
-
 @Injectable({
   providedIn: 'root'
 })
 
 export class AuthService {
   user = new BehaviorSubject<User>(null);
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   signUp(email: string, password: string) {
     const params = {
@@ -52,6 +52,11 @@ export class AuthService {
           resData.idToken,
           +resData.expiresIn);
       }));
+  }
+
+  logout() {
+    this.user.next(null);
+    this.router.navigate(['/auth']);
   }
 
   private handleAuthenticate(email: string, userId: string, token: string, expiresIn: number) {
