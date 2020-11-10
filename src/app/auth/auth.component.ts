@@ -1,4 +1,9 @@
-import { Component, ComponentFactoryResolver, ViewChild, OnDestroy } from '@angular/core';
+import {
+  Component,
+  ComponentFactoryResolver,
+  ViewChild,
+  OnDestroy,
+} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService, AuthResponseData } from './auth.service';
@@ -7,21 +12,21 @@ import { AlertComponent } from '../shared/alert/alert.component';
 import { PlaceholderDirective } from '../shared/placeholder/placeholder.component';
 @Component({
   selector: 'app-auth',
-  templateUrl: './auth.component.html'
+  templateUrl: './auth.component.html',
 })
-
 export class AuthComponent implements OnDestroy {
   isLoginMode = true;
   isLoading = false;
   error: string = null;
   private closeSub: Subscription;
-  @ViewChild(PlaceholderDirective, { static: false }) alertHost: PlaceholderDirective;
+  @ViewChild(PlaceholderDirective, { static: false })
+  alertHost: PlaceholderDirective;
 
   constructor(
     private authService: AuthService,
     private router: Router,
     private componentFactoryResolver: ComponentFactoryResolver
-  ) { }
+  ) {}
 
   onSwitchMode() {
     this.isLoginMode = !this.isLoginMode;
@@ -43,17 +48,18 @@ export class AuthComponent implements OnDestroy {
     }
 
     authObs.subscribe(
-      resData => {
+      (resData) => {
         console.log(resData);
         this.isLoading = false;
         this.router.navigate(['/recipes']);
       },
-      errorResMessage => {
+      (errorResMessage) => {
         console.log(errorResMessage);
         this.error = errorResMessage;
         this.showAlert(errorResMessage);
         this.isLoading = false;
-      });
+      }
+    );
     form.reset();
   }
 
@@ -67,7 +73,9 @@ export class AuthComponent implements OnDestroy {
   }
 
   private showAlert(message) {
-    const alertCmptFacotry = this.componentFactoryResolver.resolveComponentFactory(AlertComponent);
+    const alertCmptFacotry = this.componentFactoryResolver.resolveComponentFactory(
+      AlertComponent
+    );
     const hostViewContainerRef = this.alertHost.viewContainerRef;
     hostViewContainerRef.clear();
     const componentRef = hostViewContainerRef.createComponent(alertCmptFacotry);
